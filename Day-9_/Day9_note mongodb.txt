@@ -1,0 +1,18 @@
+CATATAN day 9
+
+--> menampilkan data dengan name= wendys , ditampilkan kolom nama doang
+db.restaurants.find({name:"Wendy'S"},{name:1}).pretty()
+
+-->
+db.myCol.insert([
+{nama:'Andi', usia:19, kota:'Jakarta'},
+{nama:'Budi', usia:25, kota:'Bandung'},
+{nama:'Caca', usia:31, kota:'Bandung'},
+{nama:'Nadia', usia:21, kota:'Surabaya'}
+])
+
+--> ditampilkan waktu doang
+db.waktu.find({'nama':'Budi'}, {'waktu':1})
+
+
+dikopi ke c - users - nadian - 

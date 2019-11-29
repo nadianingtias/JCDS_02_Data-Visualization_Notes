@@ -1,0 +1,102 @@
+
+---------------------------------------------------------------------------
+################# complex READ
+---> READ 1
+db.pelapak.find('nama' = 'nadia')
+---------------------------------------------------------------------------
+---> $gt = greater than
+db.pelapak.find({
+	usia: {$gt : 23}
+})
+---------------------------------------------------------------------------
+--- > $gte = greater than equal
+db.pelapak.find(
+{
+	$and : [{nationality:'indonesia'}, {usia :{$gte:23}}]
+}
+).pretty()
+
+result : {
+        "_id" : ObjectId("5ddb5b6a8f5d4ed72ae171a5"),
+        "nama" : "budi",
+        "usia" : 25,
+        "nationality" : "indonesia"
+}
+{
+        "_id" : ObjectId("5ddb5b6a8f5d4ed72ae171a6"),
+        "nama" : "caca",
+        "usia" : 23,
+        "nationality" : "indonesia"
+}
+---------------------------------------------------------------------------
+
+--> query mencari yang namanya ANDI atau NADIA
+db.pelapak.find({
+	$or : [{nama:'Andi'}, {name:'nadia'}]
+})
+> db.pelapak.find({ $or : [{nama:'Andi'}, {name:'nadia'}] }).pretty()
+result: {
+        "_id" : ObjectId("5ddb4fac8f5d4ed72ae171a2"),
+        "kota" : "sidoarjo",
+        "job" : "Data Scientist",
+        "nationality" : "Indonesia",
+        "name" : "nadia"
+}
+---------------------------------------------------------------------------
+---> 
+db.pelapak.find({
+	$and : [{job:'Data Scientist'}, {name:'nadia'}]
+})
+
+result : { "_id" : ObjectId("5ddb4fac8f5d4ed72ae171a2"), "kota" : "sidoarjo", "job" : "Data Scientist", "nationality" : "Indonesia", "name" : "nadia" }
+>
+---------------------------------------------------------------------------
+INSERT
+db.pelapak.insert({	'name' : 'Euis',
+			'address' : {
+			'city' : 'cimahi',
+ 			'zipcode' : '12345',
+		'	gps' : [{long : 3.45}, {lat : 5.6}]
+}})
+---------------------------------------------------------------------------
+---> sorting descending berdasarkan usia
+db.pelapak.find().sort({usia:-1})
+result : 
+{ "_id" : ObjectId("5ddb5b6a8f5d4ed72ae171a5"), "nama" : "budi", "usia" : 25, "nationality" : "indonesia" }
+{ "_id" : ObjectId("5ddb4fac8f5d4ed72ae171a3"), "usia" : 23, "nationality" : "Indonesia", "name" : "caca" }
+{ "_id" : ObjectId("5ddb5b6a8f5d4ed72ae171a6"), "nama" : "caca", "usia" : 23, "nationality" : "indonesia" }
+{ "_id" : ObjectId("5ddb5b6a8f5d4ed72ae171a4"), "name" : "nadia", "usia" : 21, "nationality" : "indonesia" }
+{ "_id" : ObjectId("5ddb4fac8f5d4ed72ae171a2"), "kota" : "sidoarjo", "job" : "Data Scientist", "nationality" : "Indonesia", "name" : "nadia" }
+>
+
+
+db.pelapak.find().sort({usia:-1}).limit(2)
+{
+        "_id" : ObjectId("5ddb5b6a8f5d4ed72ae171a5"),
+        "nama" : "budi",
+        "usia" : 25,
+        "nationality" : "indonesia"
+}
+{
+        "_id" : ObjectId("5ddb4fac8f5d4ed72ae171a3"),
+        "usia" : 23,
+        "nationality" : "Indonesia",
+        "name" : "caca"
+}
+
+
+
+
+
+
+
+
+mongoimport --db resto --collection restaurants --file restaurants.json
+
+
+
+
+
+
+
+

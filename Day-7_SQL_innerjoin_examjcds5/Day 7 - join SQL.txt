@@ -1,0 +1,201 @@
+create table tabelA(
+ id_user int,
+ username varchar(100),
+ id_bagian int,
+ primary key(id_user)
+);
+desc tabelA
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| id_user   | int(11)      | NO   | PRI | NULL    |       |
+| username  | varchar(100) | YES  |     | NULL    |       |
+| id_bagian | int(11)      | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+
+create table tabelB(
+ id_bagian int,
+ nama_bagian varchar(100),
+ primary key(id_bagian)
+);
++-------------+--------------+------+-----+---------+-------+
+| Field       | Type         | Null | Key | Default | Extra |
++-------------+--------------+------+-----+---------+-------+
+| id_bagian   | int(11)      | NO   | PRI | NULL    |       |
+| nama_bagian | varchar(100) | YES  |     | NULL    |       |
++-------------+--------------+------+-----+---------+-------+
+
+insert into tabela values 
+(1, 'andi', 1),
+(2, 'budi', 1),
+(3, 'caca', 2),
+(4, 'deni', 2),
+(5, 'euis', 1);
++---------+----------+-----------+
+| id_user | username | id_bagian |
++---------+----------+-----------+
+|       1 | andi     |         1 |
+|       2 | budi     |         1 |
+|       3 | caca     |         2 |
+|       4 | deni     |         2 |
+|       5 | euis     |         1 |
++---------+----------+-----------+
+
+insert into tabelb values 
+(1, 'HR'),
+(2, 'Marketing'),
+(3, 'Finance'),
+(4, 'Engineer');
++-----------+-------------+
+| id_bagian | nama_bagian |
++-----------+-------------+
+|         1 | HR          |
+|         2 | Marketing   |
+|         3 | Finance     |
+|         4 | Engineer    |
++-----------+-------------+
+
+select Username, Nama_Bagian from 
+tabela inner join tabelb
+on tabela.id_bagian = tabelb.id_bagian;
+
+select Username, Nama_Bagian from 
+tabela inner join tabelb
+using (id_bagian);
+------------------------------------------------------------
+select Username, Nama_Bagian from 
+tabela left join tabelb
+on tabela.id_bagian = tabelB.id_bagian
++----------+-------------+
+| Username | Nama_Bagian |
++----------+-------------+
+| andi     | HR          |
+| budi     | HR          |
+| caca     | Marketing   |
+| deni     | Marketing   |
+| euis     | HR          |
++----------+-------------+
+
+------------------------------------------------------------
+select Username, Nama_Bagian from 
+tabela right join tabelb
+on tabela.id_bagian = tabelB.id_bagian
++----------+-------------+
+| Username | Nama_Bagian |
++----------+-------------+
+| andi     | HR          |
+| budi     | HR          |
+| caca     | Marketing   |
+| deni     | Marketing   |
+| euis     | HR          |
+| NULL     | Finance     |
+| NULL     | Engineer    |
++----------+-------------+
+
+------------------------------------------------------------
+
+select Username, Nama_Bagian from 
+tabela outer join tabelb
+on tabela.id_bagian = tabelB.id_bagian
+
+
+## Semua B yang Tidak ada hubungan dengan tabel A
+select Username, Nama_Bagian from 
+tabela right join tabelb
+on tabela.id_bagian = tabelB.id_bagian
+(mendapatkan data dari tabel B, yang berhubungan dg tabel A)
+
+select Username, Nama_Bagian from 
+tabela left join tabelb
+on tabela.id_bagian = tabelB.id_bagian
+where tabelb.id_bagian is null
+(mendapatkan data dari tabel A, yang id bagiannya tidak berhasil dicari di tabelb)
+
+select Username, Nama_Bagian from 
+tabela left join tabelb
+on tabela.id_bagian = tabelB.id_bagian
+where tabela.id_bagian is null
+(sama seperti select username, namabagian where id_bagian is null)
+
+------------------------------------------------------------
+select username, nama_bagian from
+tabelA left outer join tabelb
+using(id_bagian)
+union
+select username, nama_bagian from
+tabelA right outer join tabelb
+using(id_bagian)
+------------------------------------------------------------
+
+
+### VIEW di dalam DB world
+create view kotaidn as 
+	select city.name as kota, country.name as negara
+	from city 
+	inner join country
+	on city.countrycode = country.code
+	where country.code = 'idn';
+
+alter view kotaidn as 
+select id, city.name as kota, country.name as negara
+	from city 
+	inner join country
+	on city.countrycode = country.code
+	where country.code = 'idn';
+
+
+
+
+#### kembali ke DB myshop
+
+==> membuat tabelab sebagai tabel transaksi
+create table tabelab(
+	user_id int,
+	id_bagian int
+);
+
+==> memasukkan data-data transaksi ke dalam tabelab
+insert into tabelab values
+(1,1),
+(2,2),
+(3,2),
+(4,2),
+(5,3),
+(6,4);
+
+==> inner join 2 tabel master dengan 1 tabel transaksi
+select * 
+from tabela 
+inner join tabelab
+on tabela.id_user =  tabelab.user_id
+
+inner join tabelb
+on tabelab.id_bagian = tabelb.id_bagian;
+
++---------+----------+---------+-----------+-----------+-------------+
+| id_user | username | user_id | id_bagian | id_bagian | nama_bagian |
++---------+----------+---------+-----------+-----------+-------------+
+|       1 | andi     |       1 |         1 |         1 | HR          |
+|       2 | budi     |       2 |         2 |         2 | Marketing   |
+|       3 | caca     |       3 |         2 |         2 | Marketing   |
+|       4 | deni     |       4 |         2 |         2 | Marketing   |
+|       5 | euis     |       5 |         3 |         3 | Finance     |
+|       6 | fafa     |       6 |         4 |         4 | Engineer    |
++---------+----------+---------+-----------+-----------+-------------+
+
+==> tanpa inner join, menggunakan where saja
+select a.username, b.nama_bagian from
+tabela a, tabelb b, tabelab ab
+
++----------+-------------+
+| username | nama_bagian |
++----------+-------------+
+| andi     | HR          |
+| budi     | Marketing   |
+| caca     | Marketing   |
+| deni     | Marketing   |
+| euis     | Finance     |
+| fafa     | Engineer    |
++----------+-------------+
+where a.id_user = ab.user_id and b.id_bagian = ab.id_bagian 
+

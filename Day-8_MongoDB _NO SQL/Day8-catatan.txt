@@ -1,0 +1,58 @@
+---> menampilkan semua db yang ada
+show dbs
+---> switch into database tokoonline
+use tokoonline
+
+---> membuat collection baru
+db.createCollections('pelapak')
+
+---> menambah user baru di db yang kkita sedang aktif
+db.createUser({
+user : "nadian",
+pwd : "nadian",
+roles : ['dbAdmin', 'readWrite']
+})
+Successfully added user: { "user" : "nadian", "roles" : [ "dbAdmin", "readWrite" ] }
+
+---> menampilkan user
+show users
+---------------------------------------------------------------------------
+---> CREATE
+db.pelapak.insert(
+[{
+	name : "nadia",
+	usia : 21,
+	nationality : "indonesia"
+	
+},
+{
+	nama : "budi",
+	usia : 25,
+	nationality : "indonesia"
+},
+{
+	nama : "caca",
+	usia : 23,
+	nationality : "indonesia"
+}
+]
+)
+---------------------------------------------------------------------------
+---> READ
+db.pelapak.find()
+---------------------------------------------------------------------------
+---> UPDATE (remake si objek bernama nadia)
+db.pelapak.update({nama: 'nadia'}, {nama:'nadia', kota:'sidoarjo'})
+
+--> UPDATE dengan menambah kolom baru job
+db.pelapak.update({nama : 'nadia'},{$set : {job: 'Data Scientist'}})
+
+---> UPDATE MANY (UDPATE ALL DATA ditambah dengan field nationality)
+db.pelapak.updateMany({},{$set : {nationality:"Indonesia"}})
+
+---> UPDATE table key NAMA -> menjadi -> NAME
+db.pelapak.updateMany({},{$rename : {'nama' : 'name'}})
+
+---> DELETE
+db.pelapak.remove( nama= 'nadia')
+

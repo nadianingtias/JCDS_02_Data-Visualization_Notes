@@ -1,0 +1,130 @@
+day 6 - 21Nov2019
+------------------------------------------------
+create table karyawan(
+id_kar bigint not null auto_increment,
+nama varchar(50) default 'anonimous',
+sex set('pria', 'wanita'),
+gaji int default 5000000,
+created_at timestamp default current_timestamp,
+primary key (id_kar)
+);
+
+------------------------------------------------
+insert into karyawan (nama, sex) values ("Anna", "wanita");
+
+insert into karyawan (nama, sex) values ("Elsa", "wanita"),
+('Kristoff', 'pria');
+
+insert into karyawan (nama, sex) values ("Anna", "pria,wanita");
+
+------------------------------------------------
+after delete from karyawan where id_kar = 2
+
+insert into karyawan (id_kar, nama, sex) values (2, "Anna", "pria,wanita");
+(BISA)
+
+------------------------------------------------
+select nama, gaji from karyawan limit 2,1;
+artinya : select setelah data ke 2, sebanyak 1 row
+
+------------------------------------------------
+
+select nama, gaji, 0.025*gaji as pajak from karyawan ;
+artinya : membuat kolom temporal dengan judul pajak
+------------------------------------------------
+
+select * from karyawan order by nama desc, created_at;
++--------+----------+-------------+---------+---------------------+
+| id_kar | nama     | sex         | gaji    | created_at          |
++--------+----------+-------------+---------+---------------------+
+|      4 | Olaf     | pria,wanita | 5000000 | 2019-11-21 09:37:38 |
+|      3 | Kristoff | pria        | 5000000 | 2019-11-21 09:36:56 |
+|      1 | Anna     | wanita      | 5000000 | 2019-11-21 09:34:51 |
+|      2 | Anna     | pria,wanita | 5000000 | 2019-11-21 09:39:34 |
++--------+----------+-------------+---------+---------------------+
+arti : sort by nama secara desc, then sort by created_at in asc
+
+------------------------------------------------
+
+select * from karyawan where gaji between 4000000 and 6000000;
+select * from karyawan where gaji > 4000000 or < 6000000;
+
+------------------------------------------------
+
+select * from karyawan where nama like 'an%'
+arti : dimulai dg an- terusnya terserah
+
+select * from karyawan where nama like '%n%'
+------------------------------------------------
+select * from karyawan
+
+------------------------------------------------
+fungsi aggregrate
+
+select count(*) from karyawan;
+
+select count(nama) from karyawan where nama = anna;
+
+select max(gaji) as gaji_tertinggi from karyawan;
+
+select sum(gaji) as totalGaji from karyawan;
+
+------------------------------------------------
+menampilkan rata2 gaji karyawab yang gajinya kurang dari rata2 gaji karyawan
+
+select avg(gaji) from karyawan where gaji < (	
+	select avg(gaji) from karyawan
+);
+------------------------------------------------
+menampilkan data karyawan yang gajinya kurang dari rata2 gaji karyawan
+
+select * from karyawan where gaji < (	
+	select avg(gaji) from karyawan
+);
+
+select avg(gaji) from(
+select * from karyawan where gaji < (	
+	select avg(gaji) from karyawan
+)
+)
+------------------------------------------------
+update karyawan set nama = "ani" where sex = 'wanita';
+update karyawan set sex = "wanita" where nama = 'anna';
+
+update karyawan set gaji=7000000, nama='olaf' where id_kar=4;
+
+------------------------------------------------
+alter table karyawan add column alamat text after sex;
++--------+----------+-------------+--------+---------+---------------------+
+| id_kar | nama     | sex         | alamat | gaji    | created_at          |
++--------+----------+-------------+--------+---------+---------------------+
+|      1 | ani      | wanita      | NULL   | 5000000 | 2019-11-21 09:34:51 |
+|      2 | Anna     | wanita      | NULL   | 5000000 | 2019-11-21 09:39:34 |
+|      3 | Kristoff | pria        | NULL   | 5000000 | 2019-11-21 09:36:56 |
+|      4 | olaf     | pria,wanita | NULL   | 7000000 | 2019-11-21 09:37:38 |
++--------+----------+-------------+--------+---------+---------------------+
+alter table karyawan 
+modify column 
+sex set('pria','wanita') 
+after gaji
++--------+----------+--------+---------+-------------+---------------------+
+| id_kar | nama     | alamat | gaji    | sex         | created_at          |
++--------+----------+--------+---------+-------------+---------------------+
+|      1 | ani      | NULL   | 5000000 | wanita      | 2019-11-21 09:34:51 |
+|      2 | Anna     | NULL   | 5000000 | wanita      | 2019-11-21 09:39:34 |
+|      3 | Kristoff | NULL   | 5000000 | pria        | 2019-11-21 09:36:56 |
+|      4 | olaf     | NULL   | 7000000 | pria,wanita | 2019-11-21 09:37:38 |
++--------+----------+--------+---------+-------------+---------------------+
+
+alter table karyawan 
+rename column 
+sex to gender;
+
+alter table karyawan 
+modify column 
+sex to gender;
+
+alter table `karyawan`
+change column `sex`
+`gender`
+set('pria','wanita');
