@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_edc1e1cc0f954f14b081f48b8209115e {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_edc1e1cc0f954f14b081f48b8209115e" ></div>
+        
+</body>
+<script>    
+    
+            var map_edc1e1cc0f954f14b081f48b8209115e = L.map(
+                "map_edc1e1cc0f954f14b081f48b8209115e",
+                {
+                    center: [-6.1753924, 106.8271532],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 17,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_48aae506e3994ff3b830e8f447ca0b96 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_edc1e1cc0f954f14b081f48b8209115e);
+        
+    
+            var marker_b4d5aecb6e6a404fb534a7f7d5a50e3b = L.marker(
+                [-6.1753924, 106.8271532],
+                {}
+            ).addTo(map_edc1e1cc0f954f14b081f48b8209115e);
+        
+    
+            var icon_d985e675dd3b47d091fed491665cca56 = L.AwesomeMarkers.icon(
+                {"extraClasses": "fa-rotate-0", "icon": "bullseye", "iconColor": "white", "markerColor": "pink", "prefix": "fa"}
+            );
+            marker_b4d5aecb6e6a404fb534a7f7d5a50e3b.setIcon(icon_d985e675dd3b47d091fed491665cca56);
+        
+    
+        var popup_b88e72e64b2541b3a464c8e875077bc1 = L.popup({"maxWidth": "100%"});
+
+        
+            var html_077ee11d6adb4108a2be30b4e1e26c08 = $(`<div id="html_077ee11d6adb4108a2be30b4e1e26c08" style="width: 100.0%; height: 100.0%;"><b>MONAS</b><br><small> Jakarta</small></div>`)[0];
+            popup_b88e72e64b2541b3a464c8e875077bc1.setContent(html_077ee11d6adb4108a2be30b4e1e26c08);
+        
+
+        marker_b4d5aecb6e6a404fb534a7f7d5a50e3b.bindPopup(popup_b88e72e64b2541b3a464c8e875077bc1)
+        ;
+
+        
+    
+    
+            marker_b4d5aecb6e6a404fb534a7f7d5a50e3b.bindTooltip(
+                `<div>
+                     <i> halo </i>
+                 </div>`,
+                {"sticky": true}
+            );
+        
+</script>
